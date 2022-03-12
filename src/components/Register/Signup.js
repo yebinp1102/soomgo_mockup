@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styledComponents from 'styled-components';
+import { Link } from 'react-router-dom';
+import GoogleIcon from '@mui/icons-material/Google';
 
 // USER_REGEX는 반드시 소문자 혹은 대문자로 시작해야하고 4-23자
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -73,19 +75,19 @@ const Signup = () => {
       <Container>
         {success ? (
           <section>
-            <h1>Success!</h1>
+            <h1>회원가입 되셨습니다!</h1>
             <p>
-              <a href='#'>Sign In</a>
+              <a href='#'>회원가입</a>
             </p>
           </section>
         ): (
         <section>
           {/* 에러 메세지가 있을 경우, 클래스명은 errmsg. 그렇지 않으면 offscreen */}
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-          <h1>Register</h1>
+          <h1>숨고에 오신 것을 환영합니다!</h1>
           <form onSubmit={handleSubmit}>
             <label htmlFor='username'>
-              Username:
+              아이디:
               <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
               <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
             </label>
@@ -110,13 +112,13 @@ const Signup = () => {
             {/* 클래스명은 userFocus가 true이고 user가 존재하고(=비어 있지 않은 상태)이지만 적합하지 않은 이름일 경우 instruction. 적합하면 offscreen */}
             <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
               <FontAwesomeIcon icon={faInfoCircle} />
-              4 to 24 characters.<br />
-              Must begin with a letter.<br />
-              Letters, numbers, underscores, hyphens allowed.
+              4~24자여야 합니다.<br />
+              반드시 소문자나 대문자로 시작해야 합니다.<br />
+              문자, 숫자, 언더스코어(_), 하이픈(-) 조합만 사용 가능합니다.
             </p>
 
             <label htmlFor="password">
-              Password:
+              비밀번호:
               <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
               <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
             </label>
@@ -133,13 +135,13 @@ const Signup = () => {
             />
             <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
               <FontAwesomeIcon icon={faInfoCircle} />
-              8 to 24 characters.<br />
-              Must include uppercase and lowercase letters, a number and a special character.<br />
-              Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+              8~24자여야 합니다.<br />
+              반드시 대문자, 소문자, 숫자 그리고 특수 문자를 포함해야 합니다.<br />
+              허용되는 특수문자: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
             </p>
 
             <label htmlFor="confirm_pwd">
-              Confirm Password:
+              비밀번호 확인:
               {/* validMatch도 true여야 하지만 matchPwd도 true 여야 하며 둘 다 존재하는 값이여야 한다. */}
               <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
               <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
@@ -157,20 +159,22 @@ const Signup = () => {
             />
             <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
                 <FontAwesomeIcon icon={faInfoCircle} />
-                Must match the first password input field.
+                반드시 입력한 비밀번호와 같아야 합니다.
             </p>
 
+            <div className='toLogin'>
+              <p>이미 회원이신가요?</p>
+              <Link to="/login">로그인</Link>
+            </div>
+
             {/* 3개의 필드 모두 유효성 검사를 할 떄까지 button 테그를 비활성화 */}
-            <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+            <button disabled={!validName || !validPwd || !validMatch ? true : false}>회원가입</button>
+            <button className='googleLogin'>
+              <GoogleIcon />
+              <span>Google로 회원가입 하기</span>
+            </button>
           </form>
 
-          <p>
-            Already registered?<br />
-            <span className="line">
-                {/*put router link here*/}
-                <a href="#">Sign In</a>
-            </span>
-          </p>
         </section>
         )}
       </Container>
@@ -194,23 +198,67 @@ const Container = styledComponents.div`
   section {
     width: 100%;
     max-width: 600px;
-    min-height: 600px;
+    min-height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1rem;
+    padding: 3rem;
     background-color: #fff;
+
+    .toLogin{
+      margin-top: 20px;
+
+      p{
+        margin-bottom: 10px;
+      }
+
+      a{
+        color: #000;
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      a:hover{
+        text-decoration: underline;
+
+      }
+
+    }
+
+    h1{
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 600;
+    }
   }
   form {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     flex-grow: 1;
-    padding-bottom: 1rem;
+    margin-top: 15px;
+
+    .googleLogin{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg{
+        margin-right: 10px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        padding: 5px;
+        font-size: 2rem;
+      }
+    }
   }
 
   a, a:visited {
       color: #fff;
+  }
+
+  label{
+    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
 
   input[type="text"],
@@ -219,21 +267,31 @@ const Container = styledComponents.div`
   textarea {
     font-family: 'Nunito', sans-serif;
     font-size: 22px;
-    padding: 0.25rem;
+    padding: .75rem;
     border-radius: 0.5rem;
+    border: 2px solid lightgray;
   }
 
   label,
   button {
-    margin-top: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  button:last-child{
+    margin: 15px 0 0 0;
+    cursor: pointer;
+    background-color: #00B4D8;
+    border: none;
+    padding: 15px;
+    color: #fff;
   }
 
   button {
-    padding: 0.5rem;
+    padding: 0.75rem;
   }
 
   .instructions {
-      font-size: 0.75rem;
+      font-size: 1rem;
       border-radius: 0.5rem;
       background: #000;
       color: #fff;
@@ -243,7 +301,7 @@ const Container = styledComponents.div`
   }
 
   .instructions > svg {
-      margin-right: 0.25rem;
+      margin-right: 10px;
   }
 
   .offscreen {
@@ -273,7 +331,4 @@ const Container = styledComponents.div`
       margin-bottom: 0.5rem;
   }
 
-  .line {
-      display: inline-block;
-  }
 `;

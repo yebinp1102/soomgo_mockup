@@ -15,16 +15,16 @@ const Navbar = () => {
         </Link>
         <Menu>
           <Link to="/buy">
-            <li href='#'>바로구매</li>
+            <li>바로구매</li>
           </Link>
-          <Link to="/search/pro">
-            <li href='#'>고수찾기</li>
+          <Link to="/search/pro/레슨">
+            <li>고수찾기</li>
           </Link>
           <Link to="/login">
-            <li href='#'>로그인</li>
+            <li>로그인</li>
           </Link>
           <Link to="/sign-up">
-            <li href='#'>회원가입</li>
+            <li>회원가입</li>
           </Link>
         </Menu>
       </Container>
