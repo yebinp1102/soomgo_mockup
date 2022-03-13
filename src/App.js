@@ -6,6 +6,8 @@ import Login from './components/Register/Login';
 import Signup from './components/Register/Signup';
 import Search from './components/Search/Search';
 import Survey from './components/Survey';
+import Request from './components/Request';
+
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/search/pro/:field" element={<Search />} />
         <Route path="/survey" element={<Survey />} />
+        <Route path="/request/sent" element={<Request />} />
       </Routes>
       <Footer />
     </BrowserRouter>

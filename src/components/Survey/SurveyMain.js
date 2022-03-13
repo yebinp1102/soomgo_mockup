@@ -1,37 +1,149 @@
-import React from 'react'
+import React, {useState} from 'react';
 import styledComponents from 'styled-components'
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import { Link } from 'react-router-dom';
 
 const SurveyMain = () => {
+  const [page, setPage] = useState(1);
+  
+  const handlePageCount = () => {
+    setPage(page+1);
+  }
+
   return (
     <MainForm>
       <div className='container'>
         <div className='formWrap'>
-          <h1>레슨을 받는 목적이 무엇인가요?</h1>
-          <ul className='form'>
-            <li>
-              <RadioButtonCheckedIcon />
-              <span>취미/다이어트</span>
-            </li>
-            <li>
-              <RadioButtonUncheckedIcon />
-              <span>오디션 준비</span>
-            </li>
-            <li>
-              <RadioButtonUncheckedIcon />
-              <span>공연/장기자랑 준비</span>
-            </li>
-            <li>
-              <RadioButtonUncheckedIcon />
-              <span>입시 준비</span>
-            </li>
-            <li>
-              <RadioButtonUncheckedIcon />
-              <span>기타</span>
-            </li>
-          </ul>
-          <button className='btn'>다음</button>
+            { page===1  && (
+              <>
+                <h1>레슨을 받는 목적이 무엇인가요?</h1>
+                <ul className='form'>      
+                  <li>
+                    <RadioButtonCheckedIcon />
+                    <span>취미</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>오디션 준비</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>공연/장기자랑 준비</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>입시 준비</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>기타</span>
+                  </li>
+                </ul>
+              </>
+              )
+            }
+            {  page===2  && (
+                <>
+                <h1>어떤 레슨 형태를 원하시나요?</h1>
+                <ul className='form'>      
+                  <li>
+                    <RadioButtonCheckedIcon />
+                    <span>개인 레슨</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>그룹 레슨</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>학원</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>무관</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>기타</span>
+                  </li>
+                </ul>
+              </>
+              )
+            }
+            {  page===3  && (
+                <>
+                <h1>레슨생의 연령대는 어떻게 되나요?</h1>
+                <ul className='form'>      
+                  <li>
+                    <RadioButtonCheckedIcon />
+                    <span>10대 미만</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>10대</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>20대</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>30대</span>
+                  </li>
+                  <li>
+                    <RadioButtonUncheckedIcon />
+                    <span>40대 이상</span>
+                  </li>
+                </ul>
+              </>
+              )
+            }
+            {  page===4  && (
+               <>
+               <h1>레슨 희망 날짜는 언제인가요?</h1>
+               <ul className='form'>      
+                 <li>
+                   <RadioButtonCheckedIcon />
+                   <span>협의 가능해요.</span>
+                 </li>
+                 <li>
+                   <RadioButtonUncheckedIcon />
+                   <span>가능한 빨리 진행하고 싶어요.</span>
+                 </li>
+                 <li>
+                   <RadioButtonUncheckedIcon />
+                   <span>일주일 내로 진행하고 싶어요.</span>
+                 </li>
+                 <li>
+                   <RadioButtonUncheckedIcon />
+                   <span>여유가 있어요</span>
+                 </li>
+                 <li>
+                   <RadioButtonUncheckedIcon />
+                   <span>기타</span>
+                 </li>
+               </ul>
+             </>
+              )
+            }
+          <p className="pageNum">{page}/4</p>
+          <div className="alignRight">
+          {page >= 4 ? (
+            <>
+              <button onClick={()=>setPage(page-1)} className='btn'>이전</button>
+              <Link to="/request/sent" className='submit' onClick={()=>alert("설문 조사가 제출 되었습니다.")}>제출</Link>
+            </>
+          ) : ( page === 1 ? (
+              <button onClick={handlePageCount} className='btn'>다음</button>            
+            ) : (
+              <>
+                <button onClick={()=>setPage(page-1)} className='btn'>이전</button>
+                <button onClick={handlePageCount} className='btn'>다음</button>            
+              </>
+            )
+          )}
+          </div>
         </div>
         <div className='subInfo'>
           <div className='info'>
@@ -60,17 +172,16 @@ const SurveyMain = () => {
 export default SurveyMain
 
 const MainForm = styledComponents.div`
-  background-color: #eee;
+  background-color: #eee;  
 
   .container{
-    position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 
     .formWrap{
-      position: relative;
-      top: -70px;
+      margin: 40px 0;
+      z-index: 999;
       background-color: #fff;
       padding: 50px 40px;
       border: 1px solid gray;
@@ -113,16 +224,35 @@ const MainForm = styledComponents.div`
         }
       }
 
-      .btn{
-        padding: 15px 45px;
-        font-size: 18px;
-        background-color: #00B4D8;
-        border: none;
-        border-radius: 5px;
-        color: #fff;
-        margin-top: 60px;
-        cursor: pointer;
-        font-weight: bold;
+      .pageNum{
+        font-size: 20px;
+        margin-top: 30px;
+        text-align: right;
+      }
+
+      .alignRight{
+        text-align: right;
+      
+        .btn{
+          padding: 15px 45px;
+          font-size: 18px;
+          background-color: #00B4D8;
+          border: none;
+          border-radius: 5px;
+          color: #fff;
+          margin-top: 60px;
+          margin-right: 15px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+        .submit{
+          border: 1px solid gray;
+          padding: 14px 44px;
+          border-radius: 5px;
+          font-weight: 600;
+          font-size: 18px;
+          margin-right: 15px;
+        }
       }
     }
 

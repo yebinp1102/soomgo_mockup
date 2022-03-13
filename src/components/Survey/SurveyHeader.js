@@ -35,19 +35,20 @@ const SurveyHeader = () => {
 export default SurveyHeader
 
 const Header = styledComponents.div`
-  height: 400px;
+  height: 360px;
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url("https://cdn.pixabay.com/photo/2018/02/22/23/07/people-3174228_1280.jpg");
   background-position: center;
+
+  
   .headerDark{
     height: 100%;
     background-color: rgba(0,0,0, .5);
-
     color: #fff;
 
     .container{
-      padding: 50px;
+      padding: 60px;
 
       h1{
         font-size: 3rem;

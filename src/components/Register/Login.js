@@ -67,7 +67,6 @@ const Login = () => {
                 onChange={(e)=>setPwd(e.target.value)}
                 value={pwd}
                 required
-                // 로그인 기능에서는 회원가입과 달리 유효성 검사가 필요하지 않기 때문에 aria 속성을 사용하지 않는다. 
               />
               <button className='loginBtn'>로그인</button>
               <button className='googleLogin'>
